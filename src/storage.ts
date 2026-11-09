@@ -1,20 +1,11 @@
-import type { Task } from './types'
+import { z } from "zod"
+import { taskSchema, type Task } from './types'
 
 /// read and write the list
 
 const STORAGE_KEY = 'kanban-tasks'
 
-function isTask(value: unknown): value is Task {
-    if (typeof value !== 'object' || value === null) return false
-    const task = value as Record<string, unknown>
-    return (
-        typeof task.id === 'string' &&
-        typeof task.title === 'string' &&
-        typeof task.completed === 'boolean' &&
-        typeof task.createdAt === 'number'
-    )
-}
-
+const tasksSchema = z.array(taskSchema)
 
 
 export function loadTasks(): Task[] {
@@ -23,8 +14,8 @@ export function loadTasks(): Task[] {
 
     try {
         const parsed: unknown = JSON.parse(raw)
-        if (!Array.isArray(parsed)) return []
-        return parsed.filter(isTask)
+        const result = tasksSchema.safeParse(parsed)
+        return result.success ? result.data : []
     } catch {
         return []
     }
