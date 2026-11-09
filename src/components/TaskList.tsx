@@ -2,7 +2,7 @@ import { Card, Heading, Separator } from "@radix-ui/themes";
 import type { Task } from "../types";
 import TaskItem from "./TaskItem";
 
-function TaskList({ tasks }: { tasks: Task[] }) {
+function TaskList({ tasks, onCompleteTask }: { tasks: Task[], onCompleteTask: (id: string) => void }) {
 
     return (
         <div style={{ maxWidth: "400px", margin: "0 auto" }}>
@@ -11,7 +11,7 @@ function TaskList({ tasks }: { tasks: Task[] }) {
                 <Separator my="3" size="4" />
                 <ol style={{ listStyle: "none", padding: "0" }}>
                     {tasks.map((task) => (
-                        <TaskItem key={task.id} task={task} />
+                        <TaskItem key={task.id} task={task} onCompleteTask={onCompleteTask} />
                     ))}
                 </ol>
             </Card>
