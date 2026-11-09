@@ -14,6 +14,11 @@ function App() {
     saveTasks(tasks)
   }, [tasks])
 
+  function handleCompleteTask(id: string): void {
+    const updatedTasks = tasks.map(task => task.id === id ? { ...task, completed: !task.completed, updatedAt: Date.now() } : task)
+    setTasks(updatedTasks)
+  }
+
   function handleAddTask(title: string) {
     const newTask: Task = {
       id: crypto.randomUUID(),
