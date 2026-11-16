@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import TaskForm from './components/TaskForm'
+// import TaskForm from './components/TaskForm'
 import { loadTasks, saveTasks } from './storage'
 import type { Task } from './types'
 import TaskList from './components/TaskList'
@@ -15,17 +15,18 @@ function App() {
   }, [tasks])
 
 
-  function handleAddTask(title: string) {
-    const newTask: Task = {
-      id: crypto.randomUUID(),
-      title: title,
-      state: "todo",
-      createdAt: Date.now(),
-      updatedAt: Date.now()
+  // function handleAddTask(title: string) {
+  //   const newTask: Task = {
+  //     id: crypto.randomUUID(),
+  //     title: title,
+  //     state: "todo",
+  //     createdAt: Date.now(),
+  //     updatedAt: Date.now()
 
-    }
-    setTasks([...tasks, newTask])
-  }
+  //   }
+  //   setTasks([...tasks, newTask])
+  // }
+
   function handleUpdateTask(id: string) {
     const updatedTasks: Task[] = tasks.map(task =>
       task.id === id
