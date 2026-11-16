@@ -1,6 +1,7 @@
 import { useState, type SubmitEvent } from "react"
 import { Flex, TextField, Button } from "@radix-ui/themes";
 import { taskSchema } from "../types";
+import Alert from "./Alert";
 
 type TaskFormProps = {
     onAddTask: (title: string) => void;
@@ -34,9 +35,12 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
                         setError(null)
                     }}
                 />
-                <Button type="submit" aria-label="Add task" variant="outline">Add</Button>
+                <Button type="submit" aria-label="Add task" variant="outline">Add task </Button>
             </Flex>
-            {error ? <p>{error}</p> : null}
+            {error &&
+                <Flex my="4" justify="center">
+                    <Alert message={error} />
+                </Flex>}
         </form>
     )
 }

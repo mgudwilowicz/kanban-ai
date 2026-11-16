@@ -3,7 +3,7 @@ import TaskForm from './components/TaskForm'
 import { loadTasks, saveTasks } from './storage'
 import type { Task } from './types'
 import TaskList from './components/TaskList'
-import { Flex } from '@radix-ui/themes'
+import { Button, Flex } from '@radix-ui/themes'
 
 
 
@@ -36,9 +36,13 @@ function App() {
 
   return (
     <>
-      <TaskForm onAddTask={handleAddTask} />
-      <Flex
-        direction={{ initial: "column", md: "row" }}
+      <Flex justify="center" my="8">
+        <Button onClick={() => { }} >Add new taks</Button>
+      </Flex >
+      {/* <TaskForm onAddTask={handleAddTask} /> */}
+      < Flex
+        direction={{ initial: "column", md: "row" }
+        }
         justify='between'
         wrap='wrap'
         gap="6"
