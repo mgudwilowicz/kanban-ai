@@ -1,5 +1,5 @@
 import { useState, type SubmitEvent } from "react"
-import { Flex, TextField, Button } from "@radix-ui/themes";
+import { Flex, TextField, Button, Dialog } from "@radix-ui/themes";
 import { taskSchema } from "../types";
 import Alert from "./Alert";
 
@@ -9,6 +9,7 @@ type TaskFormProps = {
 export default function TaskForm({ onAddTask }: TaskFormProps) {
     const [title, setTitle] = useState("")
     const [error, setError] = useState<string | null>("")
+    const [open, setOpen] = useState(false)
 
     function handleSubmit(event: SubmitEvent<HTMLFormElement>) {
         event.preventDefault()
@@ -19,29 +20,55 @@ export default function TaskForm({ onAddTask }: TaskFormProps) {
         }
         onAddTask(result.data)
         setTitle("")
+        setOpen(false)
+
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Flex my="6" gap="2" align="center" justify="center" >
+        <>
+            <Dialog.Root open={open} onOpenChange={setOpen}>
+                <Dialog.Trigger>
+                    <Flex justify="center" my="8">
+                        <Button>Add new task</Button>
+                    </Flex>
+                </Dialog.Trigger>
 
-                <TextField.Root
-                    size="3"
-                    style={{ width: "320px" }}
-                    placeholder="Add task"
-                    value={title}
-                    onChange={(event) => {
-                        setTitle(event.target.value)
-                        setError(null)
-                    }}
-                />
-                <Button type="submit" aria-label="Add task" variant="outline">Add task </Button>
-            </Flex>
-            {error &&
-                <Flex my="4" justify="center">
-                    <Alert message={error} />
-                </Flex>}
-        </form>
+                <Dialog.Content maxWidth="600px">
+                    <Dialog.Title>Add task</Dialog.Title>
+                    <Dialog.Description size="2" mb="4">
+                        Enter a title for the new task.
+                    </Dialog.Description>
+
+                    <form onSubmit={handleSubmit}>
+
+                        <TextField.Root
+                            size="3"
+                            placeholder="Add task"
+                            value={title}
+                            onChange={(event) => {
+                                setTitle(event.target.value)
+                                setError(null)
+                            }}
+                        />
+                        {error &&
+                            <Flex my="4" justify="center">
+                                <Alert message={error} />
+                            </Flex>}
+
+                        <Flex gap="3" mt="4" justify="end">
+                            <Dialog.Close>
+                                <Button variant="soft" color="gray">
+                                    Cancel
+                                </Button>
+                            </Dialog.Close>
+                            <Dialog.Close>
+                                <Button type="submit">Save</Button>
+                            </Dialog.Close>
+                        </Flex>
+                    </form>
+                </Dialog.Content>
+            </Dialog.Root>
+        </>
     )
 }
 

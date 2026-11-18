@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-// import TaskForm from './components/TaskForm'
 import { loadTasks, saveTasks } from './storage'
 import type { Task } from './types'
 import TaskList from './components/TaskList'
-import { Button, Flex } from '@radix-ui/themes'
+import { Flex } from '@radix-ui/themes'
+import TaskForm from './components/TaskForm'
 
 
 
@@ -15,17 +15,17 @@ function App() {
   }, [tasks])
 
 
-  // function handleAddTask(title: string) {
-  //   const newTask: Task = {
-  //     id: crypto.randomUUID(),
-  //     title: title,
-  //     state: "todo",
-  //     createdAt: Date.now(),
-  //     updatedAt: Date.now()
+  function handleAddTask(title: string) {
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      title: title,
+      state: "todo",
+      createdAt: Date.now(),
+      updatedAt: Date.now()
 
-  //   }
-  //   setTasks([...tasks, newTask])
-  // }
+    }
+    setTasks([...tasks, newTask])
+  }
 
   function handleUpdateTask(id: string) {
     const updatedTasks: Task[] = tasks.map(task =>
@@ -37,10 +37,7 @@ function App() {
 
   return (
     <>
-      <Flex justify="center" my="8">
-        <Button onClick={() => { }} >Add new taks</Button>
-      </Flex >
-      {/* <TaskForm onAddTask={handleAddTask} /> */}
+      <TaskForm onAddTask={handleAddTask} />
       < Flex
         direction={{ initial: "column", md: "row" }
         }
